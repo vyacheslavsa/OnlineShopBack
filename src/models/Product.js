@@ -10,7 +10,8 @@ const schema = new Schema({
     market: String,
     type: String,
     weight: Number,
-    components: Object
+    components: Object,
+    count: Number
 });
 
 module.exports = ProductSchema = mongoose.model('product', schema);
