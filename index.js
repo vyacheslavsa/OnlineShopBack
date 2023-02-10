@@ -17,6 +17,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use("/", apiRoutes);
 
+// errorMiddleware
+
 async function start() {
     try {
         await app.listen(PORT, () => {

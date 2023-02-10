@@ -1,50 +1,23 @@
-const ProductSchema = require('../../models/Product')
-const FillingSchema = require('../../models/Filling')
-const SizeSchema = require('../../models/Size')
-const MarketSchema = require('../../models/Market')
-const SauceSchema = require('../../models/Sauce')
-const BreadSchema = require('../../models/Bread')
-const VegetableSchema = require('../../models/Vegetable')
+const ProductsModel = require('../../models/Product')
+const AdditivesModel = require('../../models/Additives')
+
 
 module.exports.getProducts = async (req, res) => {
-    await ProductSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
+    try {
+        const data = await ProductsModel.find();
+
+        return res.send(data);
+    } catch(error) {
+        return res.status(500).json(error)
+    }
 }
 
-module.exports.getFillings = async (req, res) => {
-    await FillingSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
-}
-
-module.exports.getSizes = async (req, res) => {
-    await SizeSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
-}
-
-module.exports.getMarkets = async (req, res) => {
-    await MarketSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
-}
-
-module.exports.getSauces = async (req, res) => {
-    await SauceSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
-}
-
-module.exports.getBreads = async (req, res) => {
-    await BreadSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
-}
-
-module.exports.getVegetables = async (req, res) => {
-    await VegetableSchema.find().then(data => {
-        res.send(data)
-    }).catch((e) => res.status(500).json(e));
+module.exports.getAdditives = async (req, res) => {
+    try {
+        const data = await AdditivesModel.find({category: req.query.category});
+        return res.send(data);
+    } catch(error) {
+        return res.status(500).json(error)
+    }
 }
 
