@@ -3,6 +3,9 @@ const PORT = 8000;
 const app = express();
 const mongoose = require('mongoose');
 const apiRoutes = require('./src/modules/routes/routes');
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser')
+const errorMiddleware = require('./src/middlewares/error-middleware')
 require('dotenv').config();
 
 const DB_URL = process.env.DB_URL;
@@ -14,10 +17,13 @@ const corsOptions = {
     optionSuccessStatus: 200
 }
 
+
+app.use(express.json())
+app.use(cookieParser())
+app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.use("/", apiRoutes);
-
-// errorMiddleware
+app.use(errorMiddleware)
 
 async function start() {
     try {

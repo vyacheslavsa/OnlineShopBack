@@ -5,7 +5,6 @@ const AdditivesModel = require('../../models/Additives')
 module.exports.getProducts = async (req, res) => {
     try {
         const data = await ProductsModel.find();
-
         return res.send(data);
     } catch(error) {
         return res.status(500).json(error)
