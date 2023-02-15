@@ -18,16 +18,21 @@ class UserController {
         }
     }
 
-    async login(req, res) {
-        const {login, password} = req.body
-        const userData = await userService.login(login, password)
-        res.cookie('refreshToken', userData.refreshToken, {maxAge: 60 * 60, httpOnly: true})
-        return res.json(userData)
+    async login(req, res, next) {
+        try {
+            const {login, password} = req.body
+            const userData = await userService.login(login, password)
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 60 * 60, httpOnly: true})
+            return res.json(userData)
+        } catch (e) {
+            next(e)
+        }
     }
 
     async logout(req, res, next){
         try {
             const {refreshToken} = req.cookies
+            console.log(refreshToken)
             const token = await userService.logout(refreshToken)
             res.clearCookie('refreshToken')
             return res.json(token)
