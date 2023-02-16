@@ -12,10 +12,10 @@ const {body} = require('express-validator')
 router.get('/products', ProductsController.getProducts)
 router.get('/additives', AdditivesController.getAdditives)
 router.post('/registration',
-    // body('login').isLength({min: 10, max: 30}),
-    // body('login').isString(),
-    // body('password').isLength({min: 10, max: 30}),
-    // body('password').isString(),
+    body('login').isLength({min: 10, max: 30}),
+    body('login').isString(),
+    body('password').isLength({min: 10, max: 30}),
+    body('password').isString(),
     UserController.registration)
 
 router.post('/login', UserController.login)
