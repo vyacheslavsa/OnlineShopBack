@@ -11,7 +11,7 @@ class UserController {
                 return next(ApiError.BadRequest("Ошибка валидации", errors.array()))
             }
             const userData = await userService.registration(login, password)
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 60 * 60, httpOnly: true})
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
             return res.json(userData)
         } catch (e) {
             next(e)
@@ -22,7 +22,7 @@ class UserController {
         try {
             const {login, password} = req.body
             const userData = await userService.login(login, password)
-            res.cookie('refreshToken', userData.refreshToken, {maxAge: 60 * 60, httpOnly: true})
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
             return res.json(userData)
         } catch (e) {
             next(e)
@@ -43,9 +43,9 @@ class UserController {
     async refresh(req, res, next){
         try {
             const {refreshToken} = req.cookies
-            const token = await userService.refresh(refreshToken)
-            res.clearCookie('refreshToken')
-            return res.json(token)
+            const userData = await userService.refresh(refreshToken)
+            res.cookie('refreshToken', userData.refreshToken, {maxAge: 30 * 24 * 60 * 60 * 1000, httpOnly: true})
+            return res.json(userData)
         } catch (e){
             next(e)
         }
@@ -53,7 +53,7 @@ class UserController {
 
     async create(req, res, next){
         try {
-            return res.status(200).send({message: "заказ создан"})
+            return res.json({message: "заказ создан"})
         } catch (e){
             next(e)
         }
