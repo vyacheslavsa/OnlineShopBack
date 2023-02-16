@@ -4,9 +4,6 @@ const UserController = require('../controllers/User.controller')
 const ProductsController = require('../controllers/Products.controller')
 const AdditivesController = require('../controllers/Additives.controller')
 const authMiddleware = require('../../middlewares/auth-middleware')
-
-// const {getProducts, getAdditives} = require('../controllers/Products.controller')
-
 const {body} = require('express-validator')
 
 router.get('/products', ProductsController.getProducts)
